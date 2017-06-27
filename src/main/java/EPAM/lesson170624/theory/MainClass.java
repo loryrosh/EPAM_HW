@@ -1,4 +1,4 @@
-package EPAM.lesson170624.theory_classes;
+package EPAM.lesson170624.theory;
 
 import java.util.ArrayList;
 
