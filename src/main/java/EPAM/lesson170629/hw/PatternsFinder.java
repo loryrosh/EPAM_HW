@@ -35,9 +35,6 @@ public class PatternsFinder {
                 }
             }
         }
-        //for (String subSeq : res) {
-        //    System.out.println(subSeq);
-        //}
         System.out.println(res.size());
     }
 }
