@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class GenomeWithSort {
-    private static final int GENOME_SIZE = 30; //300000;
-    private static final int WORD_SIZE = 5;
+    private static final int GENOME_SIZE = 300;//300000;
+    private static final int WORD_SIZE = 2;
 
     static class Word implements Comparable<Word> {
         byte[] data; // ссылка на данные
@@ -34,34 +34,58 @@ public class GenomeWithSort {
 
     public static void main(String[] args) {
         byte[] data = SequenceGenerator.generate(GENOME_SIZE);
+        SequenceGenerator.printOut();
 
-        List<Word> list = new ArrayList<>();
+        List<Word> list = populateList(data);
+        int count = getStats(list, data);
 
-        // если передаем массив байт, будет дублирование - потребуется излишнее кол-во памяти
-        /*
-        for (int i = 0; i < data.length - WORD_SIZE; i++) {
-            list.add(new String());
+        System.out.println(count);
+        System.out.println("Resulting time in milliseconds: " + SequenceGenerator.calcTime());
+    }
+
+    private static int getStats(List<Word> list, byte[] data) {
+        Word curWord = list.get(0);
+        int count = 0;
+        boolean counted = false;
+
+        for (int i = 1; i < list.size(); i++) {
+            Word word = list.get(i);
+
+            if (word.compareTo(curWord) != 0) {
+                curWord = word;
+                counted = false;
+            } else {
+                if (!counted) {
+                    count++;
+                    printWord(data, word);
+                }
+                counted = true;
+            }
         }
-        */
+        return count;
+    }
 
+    private static void printWord(byte[] data, Word word) {
+        byte[] wordBytes = Arrays.copyOfRange(data, word.offset, word.offset + WORD_SIZE);
+
+        for (byte letter : wordBytes) {
+            System.out.print((char) letter);
+        }
+        System.out.println();
+    }
+
+    private static List<Word> populateList(byte[] data) {
         // заносим в список все слова длины WORD_SIZE
-        for (int i = 0; i < data.length - WORD_SIZE; i++) {
+        List<Word> list = new ArrayList<>();
+        for (int i = 0; i < data.length - WORD_SIZE + 1; i++) {
             list.add(new Word(data, i));
         }
 
         Collections.sort(list);
-        for (Word word : list) {
-            byte[] wordBytes = Arrays.copyOfRange(data, word.offset, word.offset + WORD_SIZE);
-            //System.out.println(Arrays.toString(wordBytes));
-
-            for (byte letter : wordBytes) {
-                System.out.print((char) letter);
-            }
-            System.out.println();
-        }
+        return list;
     }
 }
 
-// добавить счетчик
-// сделать вариант с HashTable (HashSet)
-// подсчитать скорость работы
+// добавить счетчик +
+// сделать вариант с HashTable (HashSet) +
+// подсчитать скорость работы +
