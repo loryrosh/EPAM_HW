@@ -4,15 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PatternsFinder {
-    private static final byte[] seq = SequenceGenerator.generate(30);
-    private static final int WORD_LEN = 3;
+    private static final byte[] seq = SequenceGenerator.generate(300);
+    private static final int WORD_LEN = 2;
 
     public static void main(String[] args) {
-        for (byte b : seq) {
-            System.out.print((char) b + " ");
-        }
-        System.out.println();
+        SequenceGenerator.printOut();
+
         calcInThreeLoops();
+        System.out.println("Resulting time in milliseconds: " + SequenceGenerator.calcTime());
     }
 
     // сколько раз встречаются повторяющиеся подстроки длиной WORD_LEN
@@ -36,9 +35,9 @@ public class PatternsFinder {
                 }
             }
         }
-        for (String subSeq : res) {
-            System.out.println(subSeq);
-        }
+        //for (String subSeq : res) {
+        //    System.out.println(subSeq);
+        //}
         System.out.println(res.size());
     }
 }
