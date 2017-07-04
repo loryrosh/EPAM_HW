@@ -4,14 +4,16 @@ public class MatrixProcessing {
     public static void main(String[] args) {
         int[][] matrix = {
                 {0, 1, 2},
-                {3, 4, 5},
+                {3, -4, 5},
                 {6, 7, 8}
         };
 
         int k = count(matrix, 10);
+        int sum = countSumInRow(matrix, 1);
 
         System.out.println();
         System.out.println(k);
+        System.out.println(sum);
     }
 
     private static int count(int[][] matrix, int max) {
@@ -32,5 +34,23 @@ public class MatrixProcessing {
             }
         }
         return res;
+    }
+
+    private static int countSumInRow(int[][] matrix, int rowNum) {
+        int sum = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            if (i != rowNum) {
+                continue;
+            }
+
+            int[] row = matrix[i];
+            for (int j = 0; j < row.length; j++) {
+                if (row[j] > 0) {
+                    sum += row[j];
+                }
+            }
+            return sum;
+        }
+        return sum;
     }
 }
