@@ -1,10 +1,10 @@
-package EPAM.lesson170701.operations;
+package EPAM.lesson170701.hw;
 
 public class MatrixProcessing {
     public static void main(String[] args) {
         int[][] matrix = {
                 {0, 1, 2},
-                {3, -4, 5},
+                {3, 4, 5},
                 {6, 7, 8}
         };
 
@@ -37,19 +37,16 @@ public class MatrixProcessing {
     }
 
     private static int countSumInRow(int[][] matrix, int rowNum) {
-        int sum = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            if (i != rowNum) {
-                continue;
-            }
+        if (rowNum < 0)
+            return 0;
 
-            int[] row = matrix[i];
-            for (int j = 0; j < row.length; j++) {
-                if (row[j] > 0) {
-                    sum += row[j];
-                }
+        int sum = 0;
+
+        int[] row = matrix[rowNum];
+        for (int j = 0; j < row.length; j++) {
+            if (row[j] > 0) {
+                sum += row[j];
             }
-            return sum;
         }
         return sum;
     }
