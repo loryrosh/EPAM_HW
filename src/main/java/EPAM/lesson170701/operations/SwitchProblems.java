@@ -10,6 +10,7 @@ public class SwitchProblems {
 
         switch (first) {
             case "Test":
+                int i = 0;
                 break;
             case middle: // переменная должна быть final и сразу проинициализирована
                 break;
