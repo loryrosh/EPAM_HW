@@ -1,7 +1,5 @@
 package EPAM.hw_lesson170620;
 
-import java.util.Arrays;
-
 public class CodingBat {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3};
@@ -13,7 +11,9 @@ public class CodingBat {
         //System.out.println(makeBricks(3, 2, 9));
         //System.out.println(round10(12) + round10(12) + round10(14));
 
-        System.out.println(Arrays.toString(reverse3(new int[]{1, 2, 3})));
+        //System.out.println(Arrays.toString(reverse3(new int[]{1, 2, 3})));
+
+        System.out.println(getSandwich("xxbreadyy"));
     }
 
     public static boolean array123(int[] nums) {
@@ -74,5 +74,26 @@ public class CodingBat {
             res[count++] = nums[i];
         }
         return res;
+    }
+
+    public static String getSandwich(String str) {
+        String bread = "bread";
+        int ind = str.indexOf(bread);
+        if (ind == -1)
+            return "";
+
+        int startInd = ind;
+        int endInt = -1;
+        while (ind >= 0) {
+            ind = str.indexOf(bread, ind + 1);
+
+            if (ind != -1)
+                endInt = ind;
+        }
+
+        if (endInt == -1)
+            return "";
+
+        return str.substring(startInd + bread.length(), endInt);
     }
 }
