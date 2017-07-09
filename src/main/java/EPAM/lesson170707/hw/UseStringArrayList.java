@@ -1,4 +1,4 @@
-package EPAM.lesson170707;
+package EPAM.lesson170707.hw;
 
 import EPAM.mytestframework.Asserts;
 
