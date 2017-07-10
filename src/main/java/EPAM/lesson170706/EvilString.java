@@ -22,7 +22,7 @@ public class EvilString {
     }
 
     public EvilString subString(int begin, int end) {
-        // TODO пропустили многочисленные guard conditions
+        // TODOO пропустили многочисленные guard conditions
 
         return new EvilString(value, begin, end - begin);
     }
