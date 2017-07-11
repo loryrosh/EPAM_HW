@@ -29,6 +29,10 @@ public class StringLinkedList {
                     first = current.next;
                 } else {
                     prev.next = current.next;
+
+                    if (current.next == null) {
+                        last = prev;
+                    }
                 }
                 size--;
                 res = true;
@@ -45,25 +49,56 @@ public class StringLinkedList {
     }
 
     public String remove(int i) {
-        return null;
+        if (i < 0 || i >= size)
+            return null;
+
+        Node current = first;
+        Node prev = null;
+        String res = null;
+        int idx = 0;
+
+        while (current != null) {
+            if (idx == i) {
+                // removing
+                if (prev == null) { // removing the first element
+                    first = current.next;
+                } else {
+                    prev.next = current.next;
+
+                    if (current.next == null) {
+                        last = prev;
+                    }
+                }
+                size--;
+                res = current.value;
+                break;
+            }
+            prev = current;
+            current = current.next;
+            idx++;
+        }
+
+        if (first == null) {
+            last = null;
+        }
+        return res;
     }
 
     @Override
     public String toString() {
-        // TODO через StringBuilder
-
         // traverse
-        String res = "[";
+        StringBuilder res = new StringBuilder("[");
 
         if (first != null) {
-            res += first.value;
+            res.append(first.value);
 
             Node current = first.next;
             while (current != null) {
-                res += ", " + current.value;
+                res.append(", ").append(current.value);
                 current = current.next;
             }
         }
-        return res + "]";
+        res.append("]");
+        return res.toString();
     }
 }

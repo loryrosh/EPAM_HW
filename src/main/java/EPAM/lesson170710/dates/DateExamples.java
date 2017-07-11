@@ -16,6 +16,5 @@ public class DateExamples {
 
         LocalDate birth = LocalDate.of(1963, 12, 17); // - получить нужную дату по некоторым параметрам
         System.out.println(birth.compareTo(LocalDate.now()));
-
     }
 }
