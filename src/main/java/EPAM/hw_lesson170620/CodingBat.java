@@ -13,7 +13,8 @@ public class CodingBat {
 
         //System.out.println(Arrays.toString(reverse3(new int[]{1, 2, 3})));
 
-        System.out.println(getSandwich("xxbreadyy"));
+        //System.out.println(getSandwich("xxbreadyy"));
+        System.out.println(plusOut("abXYabcXYZ", "abc"));
     }
 
     public static boolean array123(int[] nums) {
@@ -95,5 +96,32 @@ public class CodingBat {
             return "";
 
         return str.substring(startInd + bread.length(), endInt);
+    }
+
+    public static String plusOut(String str, String word) {
+        StringBuilder res = new StringBuilder();
+
+        int count = 0;
+        while (count < str.length()) {
+            boolean match = true;
+            if (str.charAt(count) == word.charAt(0)) {
+                for (int i = 0; i < word.length(); i++) {
+                    if (str.charAt(count + i) != word.charAt(i)) {
+                        match = false;
+                        break;
+                    }
+                }
+            } else
+                match = false;
+
+            if (match) {
+                res.append(word);
+                count += word.length();
+            } else {
+                res.append("+");
+                count++;
+            }
+        }
+        return res.toString();
     }
 }
