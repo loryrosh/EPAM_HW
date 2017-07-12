@@ -14,7 +14,8 @@ public class CodingBat {
         //System.out.println(Arrays.toString(reverse3(new int[]{1, 2, 3})));
 
         //System.out.println(getSandwich("xxbreadyy"));
-        System.out.println(plusOut("abXYabcXYZ", "abc"));
+        //System.out.println(plusOut("abXYabcXYZ", "abc"));
+        System.out.println(wordEnds("abcXY123XYijk", "XY"));
     }
 
     public static boolean array123(int[] nums) {
@@ -121,6 +122,23 @@ public class CodingBat {
                 res.append("+");
                 count++;
             }
+        }
+        return res.toString();
+    }
+
+    public static String wordEnds(String str, String word) {
+        if (str.length() < word.length() || str.equals(word))
+            return "";
+
+        StringBuilder res = new StringBuilder();
+        int ind = str.indexOf(word);
+        while (ind >= 0) {
+            if (ind > 0)
+                res.append(str.charAt(ind - 1));
+            if (ind < str.length() - word.length())
+                res.append(str.charAt(ind + word.length()));
+
+            ind = str.indexOf(word, ind + 1);
         }
         return res.toString();
     }
