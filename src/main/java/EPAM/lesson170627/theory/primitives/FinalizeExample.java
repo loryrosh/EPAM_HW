@@ -19,13 +19,13 @@ public class FinalizeExample {
 
     public static void main(String[] args) {
         /*while (true) {
-            new A();
+            new SuperSuperExample();
         }*/
 
         while (true) {
             storage.add(new A());
         }
 
-        //new A();
+        //new SuperSuperExample();
     }
 }

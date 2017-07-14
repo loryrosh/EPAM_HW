@@ -10,7 +10,7 @@ public class A {
 
     public A() {
         super();
-        System.out.println("constructor A");
+        System.out.println("constructor SuperSuperExample");
         i = 10;
         timestamp = System.currentTimeMillis();
     }

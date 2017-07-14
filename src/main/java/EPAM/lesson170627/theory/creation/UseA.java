@@ -2,7 +2,7 @@ package EPAM.lesson170627.theory.creation;
 
 public class UseA {
     public static void main(String[] args) {
-        //A a = new A();
+        //SuperSuperExample a = new SuperSuperExample();
         //System.out.println(a);
 
         B b = new B();
@@ -16,6 +16,6 @@ public class UseA {
         new Z();
 
         WholePicture.A p = new WholePicture.A();
-        
+
     }
 }

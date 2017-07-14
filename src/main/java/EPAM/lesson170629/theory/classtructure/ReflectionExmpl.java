@@ -12,7 +12,7 @@ public class ReflectionExmpl {
             System.out.println(m);
         }
 
-        // то же, что и A a = new A();
+        // то же, что и SuperSuperExample a = new SuperSuperExample();
         A a = c.newInstance();
         Constructor<A> constructor = c.getConstructor();
         A a2 = constructor.newInstance();

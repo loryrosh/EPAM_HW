@@ -5,7 +5,7 @@ public class VariableScope {
     static int x = 0;
 
     static class A {
-        // находится в куче до тех пор, пока жив экземпляр класса A
+        // находится в куче до тех пор, пока жив экземпляр класса SuperSuperExample
         int x;
     }
 
