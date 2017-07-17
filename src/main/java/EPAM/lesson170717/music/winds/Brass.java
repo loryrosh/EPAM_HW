@@ -9,6 +9,6 @@ public class Brass extends Winds {
 
     @Override
     public void printColor() {
-        System.out.println("golden color!");
+        System.out.println("golden getColor!");
     }
 }
