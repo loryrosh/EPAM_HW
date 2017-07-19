@@ -23,7 +23,7 @@ public class StringMethodsPractice {
         System.out.println(Asserts.assertEquals(replace("Hellolodgdfg  lo sdfl lo", "lo", "--"),
                 "Hellolodgdfg  lo sdfl lo".replace("lo", "--")));
         System.out.println(Asserts.assertEquals(replace("Hellosdfsflo   ", "lo", ""), "Hellosdfsflo   ".replace("lo", "")));
-        System.out.println(Asserts.assertEquals(replace("asd aaa u", "a", "-"), "asd aaa u".replace("a", "-")));
+        System.out.println(Asserts.assertEquals(replace("SwapExample aaa u", "a", "-"), "SwapExample aaa u".replace("a", "-")));
     }
 
 
