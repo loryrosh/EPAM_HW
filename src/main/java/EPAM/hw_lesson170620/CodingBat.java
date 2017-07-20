@@ -15,7 +15,10 @@ public class CodingBat {
 
         //System.out.println(getSandwich("xxbreadyy"));
         //System.out.println(plusOut("abXYabcXYZ", "abc"));
-        System.out.println(wordEnds("abcXY123XYijk", "XY"));
+        //System.out.println(wordEnds("abcXY123XYijk", "XY"));
+        //System.out.println(countYZ("zxyx"));
+        //System.out.println(withoutString("Hello there", "llo"));
+        System.out.println(countTriple("abcXXXabc"));
     }
 
     public static boolean array123(int[] nums) {
@@ -141,5 +144,44 @@ public class CodingBat {
             ind = str.indexOf(word, ind + 1);
         }
         return res.toString();
+    }
+
+    private static int countYZ(String str) {
+        String[] res = str.split("[y|Y|z|Z]\\b");
+
+        int reslen = 0;
+        int count = 0;
+        for (String s : res) {
+            if (s.matches(".*[y|z]\\d.*")) {
+                count++;
+            }
+            reslen += s.length();
+        }
+        return str.length() - reslen + count;
+    }
+
+    public static String withoutString(String base, String remove) {
+        return base.replaceAll(("(?i)" + remove), "");
+    }
+
+    public static int countTriple(String str) {
+        if (str.length() < 3)
+            return 0;
+
+        int count = 0;
+        for (int i = 0; i < str.length() - 2; i++) {
+            char curLetter = str.charAt(i);
+            boolean match = true;
+
+            for (int j = i + 1; j < i + 3; j++) {
+                if (str.charAt(j) != curLetter) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match)
+                count++;
+        }
+        return count;
     }
 }
