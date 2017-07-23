@@ -1,5 +1,7 @@
 package EPAM.hw_lesson170620;
 
+import java.util.Arrays;
+
 public class CodingBat {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3};
@@ -17,8 +19,22 @@ public class CodingBat {
         //System.out.println(plusOut("abXYabcXYZ", "abc"));
         //System.out.println(wordEnds("abcXY123XYijk", "XY"));
         //System.out.println(countYZ("zxyx"));
-        //System.out.println(withoutString("Hello there", "llo"));
-        System.out.println(countTriple("abcXXXabc"));
+        //System.out.println(withoutString("Hello the   re", "llo"));
+        //System.out.println(countTriple("abcXXXabc"));
+        //System.out.println(sameEnds("Hello! and Hello!"));
+        //System.out.println(mirrorEnds("xxYxx"));
+        //System.out.println(maxBlock("xyz"));
+        //System.out.println(sumNumbers("aa11b33"));
+        //System.out.println(notReplace("is-is"));
+        //System.out.println(post4(new int[]{4, 4, 1, 2, 3}));
+        //System.out.println(zeroFront(new int[]{0, 0, 1, 1}));
+        //System.out.println(Arrays.toString(withoutTen(new int[]{1, 10, 10, 2})));
+        //System.out.println(zeroMax(new int[]{0, 5, 0, 3}));
+        //System.out.println(Arrays.toString(fix34(new int[]{1, 3, 1, 4, 4, 3, 1})));
+        //System.out.println(Arrays.toString(seriesUp(3)));
+        System.out.println(maxMirror(new int[]{1, 2, 1, 20, 21, 1, 2, 1, 2, 23, 24, 2, 1, 2, 1, 25}));
+        //System.out.println(maxMirror(new int[]{5, 9, 1, 6, 5, 4, 1, 9, 5}));
+
     }
 
     public static boolean array123(int[] nums) {
@@ -183,5 +199,219 @@ public class CodingBat {
                 count++;
         }
         return count;
+    }
+
+    public static String sameEnds(String str) {
+        if (str.length() < 2)
+            return "";
+
+        int left = 0;
+        int right = 0;
+        if (str.length() % 2 == 0) {
+            right = str.length() / 2;
+        } else {
+            right = str.length() / 2 + 1;
+        }
+
+        StringBuilder res = new StringBuilder();
+        while (right < str.length() && str.charAt(left) != str.charAt(right)) {
+            right++;
+        }
+
+        while (right < str.length() && str.charAt(left) == str.charAt(right)) {
+            res.append(str.charAt(left++));
+            right++;
+        }
+
+        return res.toString();
+    }
+
+    public static String mirrorEnds(String str) {
+        StringBuilder res = new StringBuilder();
+
+        int left = 0;
+        int right = str.length() - 1;
+
+        while (left < str.length() && right >= 0 &&
+                str.charAt(left) == str.charAt(right)) {
+            res.append(str.charAt(left++));
+            right--;
+        }
+
+        return res.toString();
+    }
+
+    public static int maxBlock(String str) {
+        if (str.length() == 0)
+            return 0;
+
+        char curChar = str.charAt(0);
+        int maxCount = 1;
+
+        for (int i = 1; i < str.length(); i++) {
+            if (curChar == str.charAt(i)) {
+                int count = 1;
+                while (i < str.length() && curChar == str.charAt(i)) {
+                    count++;
+                    i++;
+                }
+                if (maxCount < count)
+                    maxCount = count;
+            }
+            if (i < str.length()) {
+                curChar = str.charAt(i);
+            }
+        }
+        return maxCount;
+    }
+
+    public static int sumNumbers(String str) {
+        int sum = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            String num = "";
+            while (i < str.length() && Character.isDigit(str.charAt(i))) {
+                num += str.charAt(i++) + "";
+            }
+
+            if (!"".equals(num)) {
+                sum += Integer.parseInt(num);
+            }
+        }
+        return sum;
+    }
+
+    public static String notReplace(String str) {
+        String res = str.replaceAll("([^a-zA-Z]|^)(is)([^a-zA-Z]|$)", "$1$2 not$3");
+
+        String r = res.replaceAll("(is not[^a-zA-Z])(is)([^a-zA-Z]|$)", "$1$2 not$3");
+        return r;
+    }
+
+    public static int[] post4(int[] nums) {
+        if (nums.length == 1)
+            return new int[]{};
+
+        int idx = nums.length - 1;
+        for (int i = idx; i >= 0; i--) {
+            if (nums[i] == 4)
+                break;
+            idx--;
+        }
+
+        int[] arr = new int[nums.length - idx - 1];
+        int count = 0;
+        for (int i = idx + 1; i < nums.length; i++) {
+            arr[count++] = nums[i];
+        }
+        return arr;
+    }
+
+    public static int[] zeroFront(int[] nums) {
+        Arrays.sort(nums);
+
+        if (nums[0] >= 0)
+            return nums;
+
+        int idx = 0;
+        while (nums[idx] == 0) {
+            idx++;
+        }
+
+        int[] res = new int[nums.length];
+        int count = 0;
+        for (int i = idx; i < nums.length; i++) {
+            res[count++] = nums[i];
+        }
+
+        for (int i = 0; i < idx; i++) {
+            res[count++] = nums[i];
+        }
+        return res;
+    }
+
+    public static int[] withoutTen(int[] nums) {
+        if (nums.length == 0)
+            return nums;
+
+        int[] res = new int[nums.length];
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 10) {
+                res[count++] = nums[i];
+            }
+        }
+        return res;
+    }
+
+    public static int[] zeroMax(int[] nums) {
+        if (nums.length == 0)
+            return nums;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                int idx = i + 1;
+                int max = 0;
+                while (idx < nums.length) {
+                    if (nums[idx] % 2 != 0 && max < nums[idx]) {
+                        max = nums[idx];
+                    }
+                    idx++;
+                }
+                nums[i] = max;
+            }
+        }
+        return nums;
+    }
+
+    public static int[] fix34(int[] nums) {
+        for (int i = 0; i < nums.length; i++)
+            if (nums[i] == 3) {
+                int temp = nums[i + 1];
+                nums[i + 1] = 4;
+                for (int j = i + 2; j < nums.length; j++)
+                    if (nums[j] == 4) nums[j] = temp;
+            }
+        return nums;
+    }
+
+    public static int[] seriesUp(int n) {
+        int[] res = new int[n * (n + 1) / 2];
+
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < i + 2; j++) {
+                res[count++] = j;
+            }
+        }
+        return res;
+    }
+
+    public static int maxMirror(int[] nums) {
+        int count = 0;
+        int maxCount = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i; j < i + nums.length; j++) {
+                int idx = j;
+                for (int k = 0; k < nums.length; k++) {
+                    while (k < nums.length && idx < nums.length && nums[idx] == nums[nums.length - 1 - k]) {
+                        count++;
+                        idx++;
+                        k++;
+                    }
+                    if (maxCount < count) {
+                        maxCount = count;
+                    }
+                    count = 0;
+                    idx = j;
+                }
+
+                if (maxCount == nums.length) {
+                    return maxCount;
+                }
+            }
+        }
+        return maxCount;
     }
 }
