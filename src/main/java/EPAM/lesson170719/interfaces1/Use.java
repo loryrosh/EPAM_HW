@@ -16,5 +16,8 @@ public class Use {
         x = a;
         x = b;
         x = c;
+
+        A a2 = (C) x; // class cast - явное преобразование типов
+        a2.change(); // если в предыдущей строке не будет Exception после class cast, то сообщение change() дойдет
     }
 }
