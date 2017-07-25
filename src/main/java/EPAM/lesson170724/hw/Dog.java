@@ -1,4 +1,4 @@
-package EPAM.lesson170724.nestedex;
+package EPAM.lesson170724.hw;
 
 public class Dog implements Pet {
     Brain brain = new Hungry();
@@ -11,6 +11,7 @@ public class Dog implements Pet {
             eat();
             bark();
             brain = Dog.this.new Fed(); // то же, что и brain = new Fed()
+            System.out.println("_______");
         }
 
         @Override
@@ -18,6 +19,23 @@ public class Dog implements Pet {
             bark();
             bite();
             bark();
+            System.out.println("_______");
+        }
+
+        @Override
+        public void stroke() {
+            wiggle();
+            bark();
+            bite();
+            System.out.println("_______");
+        }
+
+        @Override
+        public void wash() {
+            bark();
+            bark();
+            bite();
+            System.out.println("_______");
         }
     }
 
@@ -26,6 +44,7 @@ public class Dog implements Pet {
         public void feed() {
             wiggle();
             wiggle();
+            System.out.println("_______");
         }
 
         @Override
@@ -36,6 +55,26 @@ public class Dog implements Pet {
 
             // Dog.this.brain - то же самое
             brain = new Hungry();
+            System.out.println("_______");
+        }
+
+        @Override
+        public void stroke() {
+            wiggle();
+            wiggle();
+            jump();
+            brain = new Hungry();
+            System.out.println("_______");
+        }
+
+        @Override
+        public void wash() {
+            bark();
+            wiggle();
+            wiggle();
+            bark();
+            brain = new Hungry();
+            System.out.println("_______");
         }
     }
 
@@ -67,5 +106,15 @@ public class Dog implements Pet {
     @Override
     public void play() {
         brain.play();
+    }
+
+    @Override
+    public void stroke() {
+        brain.stroke();
+    }
+
+    @Override
+    public void wash() {
+        brain.wash();
     }
 }
