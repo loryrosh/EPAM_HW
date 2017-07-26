@@ -1,4 +1,4 @@
-package EPAM.lesson170717.solitare;
+package EPAM.solitare;
 
 class DiscardPile extends CardPile {
 
