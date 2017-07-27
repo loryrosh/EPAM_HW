@@ -12,21 +12,24 @@ public class Solitare extends Applet {
 
     @Override
     public void init() {
+        setSize(1100, 800);
+        setBackground(Color.lightGray);
+
         // first allocate the arrays
         allPiles = new CardPile[13]; // 13 стопок открытых карт (верхние и на веере)
         suitPile = new SuitPile[4]; // стопки вверху по мастям (4)
         tableau = new TablePile[7]; // 7 раздвинутых стопок карт
 
         // then fill them in
-        allPiles[0] = deckPile = new DeckPile(335, 5); // колода карт (закрытых)
-        allPiles[1] = discardPile = new DiscardPile(268, 5); // стопка, куда мы открываем закрытую колоду
+        allPiles[0] = deckPile = new DeckPile(935, 5); // колода карт (закрытых)
+        allPiles[1] = discardPile = new DiscardPile(780, 5); // стопка, куда мы открываем закрытую колоду
         for (int i = 0; i < 4; i++) {
             allPiles[2 + i] = suitPile[i] =
-                    new SuitPile(15 + 60 * i, 5);
+                    new SuitPile(5 + 160 * i, 5);
         }
         for (int i = 0; i < 7; i++) { // 7 стопок на столе
             allPiles[6 + i] = tableau[i] =
-                    new TablePile(5 + 55 * i, 80, i + 1);
+                    new TablePile(5 + 155 * i, 180, i + 1);
         }
     }
 

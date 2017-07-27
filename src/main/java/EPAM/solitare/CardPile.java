@@ -51,7 +51,7 @@ class CardPile {
 
 
     public void display(Graphics g) {
-        g.setColor(Color.black);
+        g.setColor(Color.white);
         if (firstCard == null) {
             g.drawRect(x, y, Card.width, Card.height);
         } else {
