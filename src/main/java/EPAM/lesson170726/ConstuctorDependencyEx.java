@@ -30,7 +30,7 @@ public class ConstuctorDependencyEx {
             this.worker = worker;
         }
 
-        public void setB(Worker worker) {
+        public void setWorker(Worker worker) {
             this.worker = worker;
         }
 
