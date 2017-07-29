@@ -19,6 +19,7 @@ class DiscardPile extends CardPile {
         if (empty()) {
             return;
         }
+
         // берем карту
         Card topCard = pop();
 

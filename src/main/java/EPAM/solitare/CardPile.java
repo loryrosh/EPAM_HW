@@ -41,8 +41,9 @@ class CardPile {
 
     // the following are sometimes overridden
     public boolean includes(int clickX, int clickY) {
-        return x <= clickX && clickX <= x + Card.width &&
-                y <= clickY && clickY <= y + Card.height;
+        return x <=
+                clickX && clickX <= x + Card.WIDTH &&
+                y <= clickY && clickY <= y + Card.HEIGHT;
     }
 
     public void select(int tx, int ty) { // что делать стопке (реакция на клик мышкой)
@@ -53,7 +54,7 @@ class CardPile {
     public void display(Graphics g) {
         g.setColor(Color.white);
         if (firstCard == null) {
-            g.drawRect(x, y, Card.width, Card.height);
+            g.drawRect(x, y, Card.WIDTH, Card.HEIGHT);
         } else {
             firstCard.draw(g, x, y);
         }

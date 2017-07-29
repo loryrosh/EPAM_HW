@@ -28,13 +28,6 @@ class TablePile extends CardPile {
     }
 
     @Override
-    public boolean includes(int clickX, int clickY) {
-        // don'Hidden test bottom of card
-        return x <= clickX && clickX <= x + Card.width && // ограничение "y" только сверху
-                y <= clickY;
-    }
-
-    @Override
     public void select(int tx, int ty) {
         if (empty()) {
             return;

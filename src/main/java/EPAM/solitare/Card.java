@@ -6,19 +6,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 class Card {
-    final String names[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    final String NAMES[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
-    // data fields for colors and suits
-    final static int width = 123;
-    final static int height = 150;
+    final static int WIDTH = 123;
+    final static int HEIGHT = 150;
 
-    final static int red = 0;
-    final static int black = 1;
+    final static int RED = 0;
+    final static int BLACK = 1;
 
-    final static int heart = 0;
-    final static int spade = 1;
-    final static int diamond = 2;
-    final static int club = 3;
+    final static int HEART = 0;
+    final static int SPADE = 1;
+    final static int DIAMOND = 2;
+    final static int CLUB = 3;
 
     final Image imgHeart;
     final Image imgSpade;
@@ -26,14 +25,12 @@ class Card {
     final Image imgClub;
     final Image imgCard;
 
-    // data fields
     private int rank;
     private int suit;
     private boolean faceup;
 
     Card link; // следующая карта - доступна напрямую
 
-    // constructor
     Card(int sv, int rv) {
         suit = sv;
         rank = rv;
@@ -46,87 +43,11 @@ class Card {
         imgCard = readCardImage("cards/full/card.png");
     }
 
-    public void draw(Graphics g, int x, int y) {
-        // clear rectangle, draw border
-        g.clearRect(x, y, width, height);
-        g.setColor(Color.white);
-        g.fillRect(x, y, width, height);
-
-        // draw body of card
-        if (isFaceUp()) {
-            if (getColor() == red) {
-                g.setColor(Color.red);
-            } else {
-                g.setColor(Color.blue);
-            }
-            g.drawString(names[getRank()], x + 7, y + 20);
-            switch (getSuit()) {
-                case heart:
-                    if (imgHeart != null) {
-                        g.drawImage(imgHeart, x, y, width, height, null);
-                    } else {
-                        g.drawLine(x + 25, y + 30, x + 35, y + 20);
-                        g.drawLine(x + 35, y + 20, x + 45, y + 30);
-                        g.drawLine(x + 45, y + 30, x + 25, y + 60);
-                        g.drawLine(x + 25, y + 60, x + 5, y + 30);
-                        g.drawLine(x + 5, y + 30, x + 15, y + 20);
-                        g.drawLine(x + 15, y + 20, x + 25, y + 30);
-                    }
-                    break;
-                case spade:
-                    if (imgSpade != null) {
-                        g.drawImage(imgSpade, x, y, width, height, null);
-                    } else {
-                        g.drawLine(x + 25, y + 20, x + 40, y + 50);
-                        g.drawLine(x + 40, y + 50, x + 10, y + 50);
-                        g.drawLine(x + 10, y + 50, x + 25, y + 20);
-                        g.drawLine(x + 23, y + 45, x + 20, y + 60);
-                        g.drawLine(x + 20, y + 60, x + 30, y + 60);
-                        g.drawLine(x + 30, y + 60, x + 27, y + 45);
-                    }
-                    break;
-                case diamond:
-                    if (imgDiamond != null) {
-                        g.drawImage(imgDiamond, x, y, width, height, null);
-                    } else {
-                        g.drawLine(x + 25, y + 20, x + 40, y + 40);
-                        g.drawLine(x + 40, y + 40, x + 25, y + 60);
-                        g.drawLine(x + 25, y + 60, x + 10, y + 40);
-                        g.drawLine(x + 10, y + 40, x + 25, y + 20);
-                    }
-                    break;
-                case club:
-                    if (imgClub != null) {
-                        g.drawImage(imgClub, x, y, width, height, null);
-                    } else {
-                        g.drawOval(x + 20, y + 25, 10, 10);
-                        g.drawOval(x + 25, y + 35, 10, 10);
-                        g.drawOval(x + 15, y + 35, 10, 10);
-                        g.drawLine(x + 23, y + 45, x + 20, y + 55);
-                        g.drawLine(x + 20, y + 55, x + 30, y + 55);
-                        g.drawLine(x + 30, y + 55, x + 27, y + 45);
-                    }
-                    break;
-            }
-        } else { // face down
-            if (imgCard != null) {
-                g.drawImage(imgCard, x, y, width, height, null);
-            } else {
-                g.setColor(Color.yellow);
-                g.drawLine(x + 35, y + 5, x + 35, y + 145);
-                g.drawLine(x + 85, y + 5, x + 85, y + 145);
-                g.drawLine(x + 5, y + 40, x + 115, y + 40);
-                g.drawLine(x + 5, y + 70, x + 115, y + 70);
-                g.drawLine(x + 5, y + 100, x + 115, y + 100);
-            }
-        }
-    }
-
     public int getColor() {
-        if (getSuit() == heart || getSuit() == diamond) {
-            return red;
+        if (getSuit() == HEART || getSuit() == DIAMOND) {
+            return RED;
         }
-        return black;
+        return BLACK;
     }
 
     public boolean isFaceUp() {
@@ -145,6 +66,54 @@ class Card {
     public int getSuit() {
         return suit;
     } // масть карты
+
+    public void draw(Graphics g, int x, int y) {
+        // clear rectangle, draw border
+        g.clearRect(x, y, WIDTH, HEIGHT);
+        g.setColor(Color.white);
+        g.fillRect(x, y, WIDTH, HEIGHT);
+
+        // draw body of the card
+        if (isFaceUp()) {
+            if (getColor() == RED) {
+                g.setColor(Color.red);
+            } else {
+                g.setColor(Color.blue);
+            }
+
+            // draw the card name
+            g.setFont(new Font("Palatino Linotype", Font.PLAIN, 25));
+            g.drawString(NAMES[getRank()], x + 10, y + 30);
+
+            // draw the card image
+            switch (getSuit()) {
+                case HEART:
+                    if (imgHeart != null) {
+                        g.drawImage(imgHeart, x, y, WIDTH, HEIGHT, null);
+                    }
+                    break;
+                case SPADE:
+                    if (imgSpade != null) {
+                        g.drawImage(imgSpade, x, y, WIDTH, HEIGHT, null);
+                    }
+                    break;
+                case DIAMOND:
+                    if (imgDiamond != null) {
+                        g.drawImage(imgDiamond, x, y, WIDTH, HEIGHT, null);
+                    }
+                    break;
+                case CLUB:
+                    if (imgClub != null) {
+                        g.drawImage(imgClub, x, y, WIDTH, HEIGHT, null);
+                    }
+                    break;
+            }
+        } else { // face down
+            if (imgCard != null) {
+                g.drawImage(imgCard, x, y, WIDTH, HEIGHT, null);
+            }
+        }
+    }
 
     private BufferedImage readCardImage(String path) {
         try {

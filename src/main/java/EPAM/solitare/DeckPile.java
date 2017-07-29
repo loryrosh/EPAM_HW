@@ -5,18 +5,35 @@ class DeckPile extends CardPile {
     DeckPile(int x, int y) {
         // first initialize parent
         super(x, y);
+        populate(new CardPile(0, 0), new CardPile(0, 0));
+    }
 
-        // then create the new deck
+    @Override
+    public void select(int tx, int ty) {
+        // если уже перебрали всю стопку - больше карт нет
+        if (empty()) {
+            while (!Solitaire.discardPile.empty()) {
+                Card card = Solitaire.discardPile.pop();
+                card.flip();
+                Solitaire.deckPile.push(card);
+            }
+            return;
+        }
+        Card card = pop();
+        Solitaire.discardPile.push(card);
+    }
+
+    private void populate(CardPile pileOne, CardPile pileTwo) {
+        // create the new deck
         // first put them into a local pile
-        CardPile pileOne = new CardPile(0, 0);
-        CardPile pileTwo = new CardPile(0, 0);
         int count = 0;
-        for (int i = 0; i < 4; i++) { // 4 масти
-            for (int j = 0; j <= 12; j++) { // по 13 карт
+        for (int i = 0; i < Solitaire.AMOUNT_PILES_LEFT; i++) { // 4 масти
+            for (int j = 0; j < Solitaire.AMOUNT_ALL_PILES; j++) { // по 13 карт
                 pileOne.push(new Card(i, j));
                 count++;
             }
         }
+
         // then pull them out randomly
         for (; count > 0; count--) {
             int limit = ((int) (Math.random() * 1000)) % count;
@@ -32,14 +49,5 @@ class DeckPile extends CardPile {
                 pileOne.push(pileTwo.pop());
             }
         }
-    }
-
-    @Override
-    public void select(int tx, int ty) {
-        if (empty()) { // если уже перебрали всю стопку - больше карт нет
-            return;
-        }
-        Card card = pop();
-        Solitaire.discardPile.push(card);
     }
 }
