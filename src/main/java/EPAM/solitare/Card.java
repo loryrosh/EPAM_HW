@@ -50,7 +50,7 @@ class Card {
         // clear rectangle, draw border
         g.clearRect(x, y, width, height);
         g.setColor(Color.white);
-        g.drawRect(x, y, width, height);
+        g.fillRect(x, y, width, height);
 
         // draw body of card
         if (isFaceUp()) {

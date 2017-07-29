@@ -24,14 +24,14 @@ class DiscardPile extends CardPile {
 
         // спрашиваем каждую из колод сверху и на столе, может эта колода принять карту
         for (int i = 0; i < 4; i++) {
-            if (Solitare.suitPile[i].canTake(topCard)) {
-                Solitare.suitPile[i].push(topCard);
+            if (Solitaire.suitPile[i].canTake(topCard)) {
+                Solitaire.suitPile[i].push(topCard);
                 return;
             }
         }
         for (int i = 0; i < 7; i++) {
-            if (Solitare.tableau[i].canTake(topCard)) {
-                Solitare.tableau[i].push(topCard);
+            if (Solitaire.tableau[i].canTake(topCard)) {
+                Solitaire.tableau[i].push(topCard);
                 return;
             }
         }

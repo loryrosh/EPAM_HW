@@ -2,8 +2,10 @@ package EPAM.solitare;
 
 import java.applet.Applet;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class Solitare extends Applet {
+public class Solitaire extends Applet {
     static DeckPile deckPile;
     static DiscardPile discardPile;
     static TablePile tableau[];
@@ -12,6 +14,7 @@ public class Solitare extends Applet {
 
     @Override
     public void init() {
+        ((Frame) this.getParent().getParent()).setTitle("Solitaire");
         setSize(1100, 800);
         setBackground(Color.lightGray);
 
@@ -31,6 +34,18 @@ public class Solitare extends Applet {
             allPiles[6 + i] = tableau[i] =
                     new TablePile(5 + 155 * i, 180, i + 1);
         }
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for (int i = 0; i < 13; i++) {
+                    if (allPiles[i].includes(e.getX(), e.getY())) {
+                        allPiles[i].select(e.getX(), e.getY());
+                        repaint();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -38,17 +53,5 @@ public class Solitare extends Applet {
         for (int i = 0; i < 13; i++) {
             allPiles[i].display(g);
         }
-    }
-
-    @Override
-    public boolean mouseDown(Event evt, int x, int y) {
-        for (int i = 0; i < 13; i++) {
-            if (allPiles[i].includes(x, y)) {
-                allPiles[i].select(x, y);
-                repaint();
-                return true;
-            }
-        }
-        return true;
     }
 }

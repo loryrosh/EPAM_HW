@@ -40,6 +40,6 @@ class DeckPile extends CardPile {
             return;
         }
         Card card = pop();
-        Solitare.discardPile.push(card);
+        Solitaire.discardPile.push(card);
     }
 }
