@@ -8,6 +8,18 @@ public class StringStackWithThrow {
     private final String[] elements;
     private int size;
 
+    public static class Overflow extends Exception {
+        private int size2;
+
+        public Overflow(int size) {
+            size2 = size;
+        }
+
+        public int getSize() {
+            return size2;
+        }
+    }
+
     public StringStackWithThrow() {
         this(DEFAULT_MAX_SIZE);
     }
@@ -18,8 +30,12 @@ public class StringStackWithThrow {
     }
 
     public boolean push(String str) throws Exception {
+        if (str == null) {
+            throw new IllegalArgumentException("nulls not allowed");
+        }
+
         if (size >= elements.length) {
-            throw new Exception("Stack Overflow");
+            throw new Overflow(size);
         }
         elements[size++] = str;
         return true;

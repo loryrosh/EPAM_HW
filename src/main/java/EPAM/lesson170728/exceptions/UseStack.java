@@ -16,11 +16,17 @@ public class UseStack {
         try {
             StringStackWithThrow stack1 = new StringStackWithThrow(2);
             stack1.push("one");
+            //stack1.push(null);
             stack1.push("two");
             timing = new BigDecimal(System.nanoTime());
             System.out.println(stack1.push("three"));
             System.out.println(new BigDecimal(System.nanoTime()).subtract(timing));
-        } catch (Exception ex) {
+
+        } catch (StringStackWithThrow.Overflow o) {
+            System.err.println("Stack overflow occurred with size " + o.getMessage());
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        } catch (Throwable ex) {
             ex.printStackTrace();
         }
         System.out.println(success);
