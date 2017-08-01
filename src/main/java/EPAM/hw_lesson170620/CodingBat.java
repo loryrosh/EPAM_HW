@@ -32,8 +32,9 @@ public class CodingBat {
         //System.out.println(zeroMax(new int[]{0, 5, 0, 3}));
         //System.out.println(Arrays.toString(fix34(new int[]{1, 3, 1, 4, 4, 3, 1})));
         //System.out.println(Arrays.toString(seriesUp(3)));
-        System.out.println(maxMirror(new int[]{1, 2, 1, 20, 21, 1, 2, 1, 2, 23, 24, 2, 1, 2, 1, 25}));
+        //System.out.println(maxMirror(new int[]{1, 2, 1, 20, 21, 1, 2, 1, 2, 23, 24, 2, 1, 2, 1, 25}));
         //System.out.println(maxMirror(new int[]{5, 9, 1, 6, 5, 4, 1, 9, 5}));
+        System.out.println(dividesSelf(120));
 
     }
 
@@ -413,5 +414,24 @@ public class CodingBat {
             }
         }
         return maxCount;
+    }
+
+    public static boolean dividesSelf(int n) {
+        if (n == 0)
+            return false;
+
+        int cur = n;
+        while (cur / 10 != 0) {
+            int res = cur % 10;
+
+            if (res == 0 || n % res != 0)
+                return false;
+
+            cur = cur / 10;
+        }
+
+        if (cur != 1 && n % cur != 0)
+            return false;
+        return true;
     }
 }
