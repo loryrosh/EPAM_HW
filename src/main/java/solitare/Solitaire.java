@@ -1,4 +1,4 @@
-package EPAM.solitare;
+package solitare;
 
 import java.applet.Applet;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class Solitaire extends Applet {
     @Override
     public void init() {
         ((Frame) this.getParent().getParent()).setTitle("Solitaire");
-        setSize(1100, 800);
+        resize(1100, 800);
         setBackground(Color.lightGray);
 
         // first allocate the arrays
@@ -62,16 +62,15 @@ public class Solitaire extends Applet {
     private class SolitaireMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 2) { // consider all piles, except deck
+            // consider all piles, except deck
+            if (e.getClickCount() == 2) {
                 openCards(1, AMOUNT_ALL_PILES, e.getX(), e.getY());
-            } else if (e.getClickCount() == 1) {
-                openCards(0, 1, e.getX(), e.getY()); // consider only deck pile
             }
-        }
 
-        @Override
-        public void mousePressed(MouseEvent e) {
-            System.out.println("Pressed");
+            // consider only deck pile
+            else if (e.getClickCount() == 1) {
+                openCards(0, 1, e.getX(), e.getY());
+            }
         }
 
         @Override

@@ -1,11 +1,11 @@
-package EPAM.solitare;
+package solitare;
 
 import java.awt.*;
 
-class CardPile {
-    // coordinates of the card pile
+class CardPile extends Component {
     protected int x;
     protected int y;
+    protected int size;
 
     private Card firstCard;
 
@@ -28,6 +28,7 @@ class CardPile {
     public void push(Card aCard) {
         aCard.link = firstCard;
         firstCard = aCard;
+        size++;
     }
 
     public Card pop() {
@@ -36,20 +37,23 @@ class CardPile {
             result = firstCard;
             firstCard = firstCard.link;
         }
+        size--;
         return result;
     }
 
     // the following are sometimes overridden
     public boolean includes(int clickX, int clickY) {
-        return x <=
-                clickX && clickX <= x + Card.WIDTH &&
-                y <= clickY && clickY <= y + Card.HEIGHT;
+        return x <= clickX && clickX <= x + Card.WIDTH && y <= clickY && clickY <= y + Card.HEIGHT;
     }
 
-    public void select(int tx, int ty) { // что делать стопке (реакция на клик мышкой)
-        // do nothing
+    // что делать стопке (реакция на клик мышкой)
+    public void select(int tx, int ty) {
     }
 
+    // можно ли в эту стопку положить эту карту?
+    public boolean canTake(Card aCard) {
+        return false;
+    }
 
     public void display(Graphics g) {
         g.setColor(Color.white);
@@ -58,10 +62,5 @@ class CardPile {
         } else {
             firstCard.draw(g, x, y);
         }
-    }
-
-    // можно ли в эту стопку положить эту карту?
-    public boolean canTake(Card aCard) {
-        return false;
     }
 }

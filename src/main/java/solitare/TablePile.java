@@ -1,16 +1,16 @@
-package EPAM.solitare;
+package solitare;
 
 import java.awt.*;
 
 class TablePile extends CardPile {
-
     TablePile(int x, int y, int c) {
-        // initialize the parent class
         super(x, y);
-        // then initialize our pile of cards
+
+        // initialize our pile of cards
         for (int i = 0; i < c; i++) {
             push(Solitaire.deckPile.pop());
         }
+
         // flip topmost card face up
         if (!top().isFaceUp()) {
             top().flip();
@@ -67,16 +67,11 @@ class TablePile extends CardPile {
         push(topCard);
     }
 
-    // перебрать все стопки до дна, а затем выкладывать со сдвигом в 35 пикселей,
-    // начиная с последней, рубашкой вверх, а первую (в данном случае заключительную) - картинкой вверх
-    private int stackDisplay(Graphics g, Card aCard) {
-        int localy;
-        if (aCard == null) {
-            return y;
-        }
-        localy = stackDisplay(g, aCard.link);
-        aCard.draw(g, x, localy);
-        return localy + 35;
+    @Override
+    public boolean includes(int clickX, int clickY) {
+        int yCardsHeadersBottom = y + Card.CARD_HEAD_HEIGHT * (size - 1);
+        return x <= clickX && clickX <= x + Card.WIDTH &&
+                yCardsHeadersBottom + 1 <= clickY && clickY <= yCardsHeadersBottom + Card.HEIGHT;
     }
 
     @Override
@@ -84,4 +79,15 @@ class TablePile extends CardPile {
         stackDisplay(g, top());
     }
 
+    // перебрать все стопки до дна, а затем выкладывать со сдвигом в 35 пикселей,
+    // начиная с последней, рубашкой вверх, а первую (в данном случае заключительную) - картинкой вверх
+    private int stackDisplay(Graphics g, Card aCard) {
+        if (aCard == null) {
+            return y;
+        }
+
+        int locally = stackDisplay(g, aCard.link);
+        aCard.draw(g, x, locally);
+        return locally + Card.CARD_HEAD_HEIGHT;
+    }
 }

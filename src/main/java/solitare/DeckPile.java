@@ -1,4 +1,4 @@
-package EPAM.solitare;
+package solitare;
 
 class DeckPile extends CardPile {
 
@@ -19,8 +19,7 @@ class DeckPile extends CardPile {
             }
             return;
         }
-        Card card = pop();
-        Solitaire.discardPile.push(card);
+        Solitaire.discardPile.push(pop());
     }
 
     private void populate(CardPile pileOne, CardPile pileTwo) {

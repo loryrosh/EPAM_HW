@@ -1,4 +1,4 @@
-package EPAM.solitare;
+package solitare;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,6 +10,7 @@ class Card {
 
     final static int WIDTH = 123;
     final static int HEIGHT = 150;
+    final static int CARD_HEAD_HEIGHT = 35;
 
     final static int RED = 0;
     final static int BLACK = 1;
@@ -19,11 +20,11 @@ class Card {
     final static int DIAMOND = 2;
     final static int CLUB = 3;
 
-    final Image imgHeart;
-    final Image imgSpade;
-    final Image imgDiamond;
-    final Image imgClub;
-    final Image imgCard;
+    final Image imgHeart = readCardImage("cards/full/heart.png");
+    final Image imgSpade = readCardImage("cards/full/spade.png");
+    final Image imgDiamond = readCardImage("cards/full/diamond.png");
+    final Image imgClub = readCardImage("cards/full/club.png");
+    final Image imgCard = readCardImage("cards/full/card.png");
 
     private int rank;
     private int suit;
@@ -35,12 +36,6 @@ class Card {
         suit = sv;
         rank = rv;
         faceup = false; // карта закрыта (лежит лицом вниз)
-
-        imgHeart = readCardImage("cards/full/heart.png");
-        imgSpade = readCardImage("cards/full/spade.png");
-        imgDiamond = readCardImage("cards/full/diamond.png");
-        imgClub = readCardImage("cards/full/club.png");
-        imgCard = readCardImage("cards/full/card.png");
     }
 
     public int getColor() {
