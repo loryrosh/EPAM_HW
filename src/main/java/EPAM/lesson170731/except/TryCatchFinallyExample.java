@@ -7,7 +7,7 @@ import java.io.IOException;
 public class TryCatchFinallyExample {
     public static void main(String[] args) {
         try {
-            FileInputStream fis = new FileInputStream("help.txt");
+            FileInputStream fis = new FileInputStream("D:\\EPAM\\Java\\HomeWorks\\data\\help.txt");
 
             try {
                 int read = fis.read();

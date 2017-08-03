@@ -5,5 +5,8 @@ public class DraggedPile extends CardPile {
         super(xCoord, yCoord);
     }
 
-    
+    public void updateCoords(int xCoord, int yCoord) {
+        x = xCoord;
+        y = yCoord;
+    }
 }

@@ -3,7 +3,6 @@ package solitare;
 class DeckPile extends CardPile {
 
     DeckPile(int x, int y) {
-        // first initialize parent
         super(x, y);
         populate(new CardPile(0, 0), new CardPile(0, 0));
     }
@@ -11,15 +10,15 @@ class DeckPile extends CardPile {
     @Override
     public void select(int tx, int ty) {
         // если уже перебрали всю стопку - больше карт нет
-        if (empty()) {
-            while (!Solitaire.discardPile.empty()) {
-                Card card = Solitaire.discardPile.pop();
+        if (isEmpty()) {
+            while (!Solitaire.discardPile.isEmpty()) {
+                Card card = Solitaire.discardPile.removeLast();
                 card.flip();
-                Solitaire.deckPile.push(card);
+                Solitaire.deckPile.add(card);
             }
             return;
         }
-        Solitaire.discardPile.push(pop());
+        Solitaire.discardPile.add(removeLast());
     }
 
     private void populate(CardPile pileOne, CardPile pileTwo) {
@@ -28,7 +27,7 @@ class DeckPile extends CardPile {
         int count = 0;
         for (int i = 0; i < Solitaire.AMOUNT_PILES_LEFT; i++) { // 4 масти
             for (int j = 0; j < Solitaire.AMOUNT_ALL_PILES; j++) { // по 13 карт
-                pileOne.push(new Card(i, j));
+                pileOne.add(new Card(i, j));
                 count++;
             }
         }
@@ -38,14 +37,14 @@ class DeckPile extends CardPile {
             int limit = ((int) (Math.random() * 1000)) % count;
             // move down to a random location
             for (int i = 0; i < limit; i++) {
-                pileTwo.push(pileOne.pop());
+                pileTwo.add(pileOne.removeLast());
             }
             // then add the card found there
-            push(pileOne.pop());
+            add(pileOne.removeLast());
 
             // then put the decks back together
-            while (!pileTwo.empty()) {
-                pileOne.push(pileTwo.pop());
+            while (!pileTwo.isEmpty()) {
+                pileOne.add(pileTwo.removeLast());
             }
         }
     }

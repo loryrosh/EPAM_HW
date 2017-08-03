@@ -7,36 +7,40 @@ class DiscardPile extends CardPile {
     }
 
     @Override
-    public void push(Card aCard) {
+    public boolean add(Card aCard) {
         if (!aCard.isFaceUp()) {
             aCard.flip();
         }
-        super.push(aCard);
+        return super.add(aCard);
     }
 
     @Override
     public void select(int tx, int ty) {
-        if (empty()) {
+        if (isEmpty()) {
             return;
         }
 
         // берем карту
-        Card topCard = pop();
+        Card topCard = removeLast();
 
-        // спрашиваем каждую из колод сверху и на столе, может эта колода принять карту
+        // спрашиваем каждую из колод сверху и на столе, может ли эта колода принять карту
         for (int i = 0; i < 4; i++) {
-            if (Solitaire.suitPile[i].canTake(topCard)) {
-                Solitaire.suitPile[i].push(topCard);
+            CardPile cardPile = new CardPile(x, y);
+            cardPile.add(topCard);
+            if (Solitaire.suitPile[i].canTake(cardPile)) {
+                Solitaire.suitPile[i].add(topCard);
                 return;
             }
         }
         for (int i = 0; i < 7; i++) {
-            if (Solitaire.tableau[i].canTake(topCard)) {
-                Solitaire.tableau[i].push(topCard);
+            CardPile cardPile = new CardPile(x, y);
+            cardPile.add(topCard);
+            if (Solitaire.tableau[i].canTake(cardPile)) {
+                Solitaire.tableau[i].add(topCard);
                 return;
             }
         }
         // nobody can use it, put it back on our list
-        push(topCard);
+        add(topCard);
     }
 }

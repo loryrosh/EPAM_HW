@@ -30,8 +30,6 @@ class Card {
     private int suit;
     private boolean faceup;
 
-    Card link; // следующая карта - доступна напрямую
-
     Card(int sv, int rv) {
         suit = sv;
         rank = rv;

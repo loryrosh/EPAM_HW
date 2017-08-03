@@ -16,6 +16,8 @@ public class Solitaire extends Applet {
     static SuitPile suitPile[];
     static CardPile allPiles[];
 
+    private DraggedPile draggedPile = null;
+
     @Override
     public void init() {
         ((Frame) this.getParent().getParent()).setTitle("Solitaire");
@@ -74,15 +76,39 @@ public class Solitaire extends Applet {
         }
 
         @Override
+        public void mousePressed(MouseEvent e) {
+            for (int i = 1; i < AMOUNT_ALL_PILES; i++) {
+                if (allPiles[i].includes(e.getX(), e.getY())) {
+                    draggedPile = allPiles[i].getDraggedPile(e.getX(), e.getY());
+                    break;
+                }
+            }
+        }
+
+        @Override
         public void mouseReleased(MouseEvent e) {
-            System.out.println("Released");
+            if (draggedPile != null) {
+                /*for (int i = 2; i < AMOUNT_ALL_PILES; i++) {
+                    if (allPiles[i].includes(e.getX(), e.getY())) {
+                        allPiles[i].select(e., y);
+                        repaint();
+
+                        draggedPile = allPiles[i].getDraggedPile(e.getX(), e.getY());
+
+                    }
+                }
+                */
+            }
         }
     }
 
     private class SolitaireMouseMotionListener extends MouseAdapter {
         @Override
         public void mouseDragged(MouseEvent e) {
-            System.out.println("Dragged");
+            if (draggedPile != null) {
+                draggedPile.updateCoords(e.getX(), e.getY());
+                repaint();
+            }
         }
     }
 }

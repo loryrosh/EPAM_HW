@@ -1,44 +1,26 @@
 package solitare;
 
 import java.awt.*;
+import java.util.LinkedList;
 
-class CardPile extends Component {
+class CardPile extends LinkedList<Card> {
     protected int x;
     protected int y;
-    protected int size;
-
-    private Card firstCard;
+    protected int height;
 
     CardPile(int xCoord, int yCoord) {
         x = xCoord;
         y = yCoord;
-        firstCard = null; // пустая стопка
     }
 
-    // access to cards are not overridden
-    public Card top() {
-        return firstCard;
-    } // первая карта в стопке - та, что наверху
-
-    public boolean empty() {
-        return firstCard == null;
-    }
-
-    // имитация работы стека
-    public void push(Card aCard) {
-        aCard.link = firstCard;
-        firstCard = aCard;
-        size++;
-    }
-
-    public Card pop() {
-        Card result = null;
-        if (firstCard != null) {
-            result = firstCard;
-            firstCard = firstCard.link;
+    @Override
+    public boolean add(Card card) {
+        if (size() == 1) {
+            height = Card.HEIGHT;
+        } else {
+            height += Card.CARD_HEAD_HEIGHT;
         }
-        size--;
-        return result;
+        return super.add(card);
     }
 
     // the following are sometimes overridden
@@ -51,16 +33,37 @@ class CardPile extends Component {
     }
 
     // можно ли в эту стопку положить эту карту?
-    public boolean canTake(Card aCard) {
+    public boolean canTake(CardPile cardPile) {
         return false;
     }
 
     public void display(Graphics g) {
         g.setColor(Color.white);
-        if (firstCard == null) {
+        if (isEmpty()) {
             g.drawRect(x, y, Card.WIDTH, Card.HEIGHT);
         } else {
-            firstCard.draw(g, x, y);
+            getLast().draw(g, x, y);
         }
+    }
+
+    public DraggedPile getDraggedPile(int tx, int ty) {
+        int yCardsHeadersBottom = y + Card.CARD_HEAD_HEIGHT * (size() - 1);
+
+        int cardNum;
+        if (ty >= yCardsHeadersBottom) {
+            cardNum = size() - 1;
+        } else {
+            cardNum = (ty - y) / Card.CARD_HEAD_HEIGHT;
+        }
+        System.out.println(cardNum);
+
+        if (cardNum != -1) {
+            DraggedPile draggedPile = new DraggedPile(x, (y + Card.CARD_HEAD_HEIGHT * cardNum));
+            for (int i = cardNum; i < size(); i++) {
+                draggedPile.add(remove(i));
+            }
+            return draggedPile;
+        }
+        return null;
     }
 }
