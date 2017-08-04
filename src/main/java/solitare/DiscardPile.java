@@ -15,6 +15,16 @@ class DiscardPile extends CardPile {
     }
 
     @Override
+    public int getDragStartCardIdx(int tx, int ty) {
+        return size() - 1; // only consider the last card
+    }
+
+    @Override
+    public int getYCoordForDragging(int cardNum) {
+        return y;
+    }
+
+    @Override
     public void select(int tx, int ty) {
         if (isEmpty()) {
             return;

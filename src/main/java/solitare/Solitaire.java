@@ -16,7 +16,9 @@ public class Solitaire extends Applet {
     static TablePile tableau[];
     static SuitPile suitPile[];
     static CardPile allPiles[];
-    static DraggedPile draggedPile;
+
+    private static DraggedPile draggedPile;
+    private static CardPile pileBeforeDragging;
 
     @Override
     public void init() {
@@ -66,26 +68,60 @@ public class Solitaire extends Applet {
 
     private class SolitaireMouseListener extends MouseAdapter {
         @Override
+        public void mouseReleased(MouseEvent e) {
+            if (draggedPile != null) {
+                boolean inserted = false;
+                for (int i = 1; i < AMOUNT_ALL_PILES; i++) {
+                    if (allPiles[i].includes(e.getX(), e.getY())
+                            && allPiles[i].canTake(draggedPile)) {
+                        while (draggedPile.size() > 0) {
+                            allPiles[i].add(draggedPile.remove(0));
+                        }
+                        inserted = true;
+                        break;
+                    }
+                }
+                if (!inserted) {
+                    int curSize = draggedPile.size();
+                    while (draggedPile.size() > 0) {
+                        pileBeforeDragging.add(draggedPile.remove(0));
+                        if (!pileBeforeDragging.getLast().isFaceUp()) {
+                            pileBeforeDragging.getLast().flip();
+                        }
+                    }
+                }
+                draggedPile = null;
+
+                if (pileBeforeDragging.size() > 0) {
+                    if (!pileBeforeDragging.getLast().isFaceUp()) {
+                        pileBeforeDragging.getLast().flip();
+                    }
+                }
+            }
+            repaint();
+        }
+
+        @Override
         public void mouseClicked(MouseEvent e) {
             // consider all piles, except deck
             if (e.getClickCount() == 2) {
-                System.out.println("ClickedTwice");
                 openCards(1, AMOUNT_ALL_PILES, e.getX(), e.getY());
             }
 
             // consider only deck pile
             else {
-                System.out.println("ClickedOnce");
                 openCards(0, 1, e.getX(), e.getY());
 
                 for (int i = 1; i < AMOUNT_ALL_PILES; i++) {
                     if (allPiles[i].includes(e.getX(), e.getY())) {
                         draggedPile = allPiles[i].getDraggedPile(e.getX(), e.getY());
+                        pileBeforeDragging = allPiles[i];
                         repaint();
                         break;
                     }
                 }
             }
+
         }
 
     }
@@ -95,9 +131,8 @@ public class Solitaire extends Applet {
         public void mouseDragged(MouseEvent e) {
             if (draggedPile != null) {
                 draggedPile.updateCoords(e.getX(), e.getY());
-                System.out.println(draggedPile.height);
-                //repaint();
-                repaint(e.getX(), e.getY(), Card.WIDTH, draggedPile.height);
+                //repaint(e.getX(), e.getY(), Card.WIDTH, draggedPile.height); // fun!!!
+                repaint();
             }
         }
     }
