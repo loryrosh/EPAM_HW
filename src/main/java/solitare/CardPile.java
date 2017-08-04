@@ -57,6 +57,7 @@ class CardPile extends LinkedList<Card> {
         }
         System.out.println(cardNum);
 
+        /*
         if (cardNum != -1) {
             DraggedPile draggedPile = new DraggedPile(x, (y + Card.CARD_HEAD_HEIGHT * cardNum));
             for (int i = cardNum; i < size(); i++) {
@@ -64,6 +65,7 @@ class CardPile extends LinkedList<Card> {
             }
             return draggedPile;
         }
+        */
         return null;
     }
 }

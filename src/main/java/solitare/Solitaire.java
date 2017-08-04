@@ -21,8 +21,8 @@ public class Solitaire extends Applet {
     @Override
     public void init() {
         ((Frame) this.getParent().getParent()).setTitle("Solitaire");
-        resize(1100, 800);
-        setBackground(Color.lightGray);
+        resize(1080, 800);
+        setBackground(Color.darkGray);
 
         // first allocate the arrays
         allPiles = new CardPile[AMOUNT_ALL_PILES]; // 13 стопок карт (верхние и на веере)
@@ -42,7 +42,6 @@ public class Solitaire extends Applet {
         }
 
         addMouseListener(new SolitaireMouseListener());
-        addMouseMotionListener(new SolitaireMouseMotionListener());
     }
 
     @Override
@@ -82,32 +81,6 @@ public class Solitaire extends Applet {
                     draggedPile = allPiles[i].getDraggedPile(e.getX(), e.getY());
                     break;
                 }
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (draggedPile != null) {
-                /*for (int i = 2; i < AMOUNT_ALL_PILES; i++) {
-                    if (allPiles[i].includes(e.getX(), e.getY())) {
-                        allPiles[i].select(e., y);
-                        repaint();
-
-                        draggedPile = allPiles[i].getDraggedPile(e.getX(), e.getY());
-
-                    }
-                }
-                */
-            }
-        }
-    }
-
-    private class SolitaireMouseMotionListener extends MouseAdapter {
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            if (draggedPile != null) {
-                draggedPile.updateCoords(e.getX(), e.getY());
-                repaint();
             }
         }
     }
