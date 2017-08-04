@@ -24,7 +24,7 @@ class DiscardPile extends CardPile {
         Card topCard = removeLast();
 
         // спрашиваем каждую из колод сверху и на столе, может ли эта колода принять карту
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < Solitaire.AMOUNT_PILES_LEFT; i++) {
             CardPile cardPile = new CardPile(x, y);
             cardPile.add(topCard);
             if (Solitaire.suitPile[i].canTake(cardPile)) {
@@ -32,7 +32,7 @@ class DiscardPile extends CardPile {
                 return;
             }
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < Solitaire.AMOUNT_PILES_TABLE; i++) {
             CardPile cardPile = new CardPile(x, y);
             cardPile.add(topCard);
             if (Solitaire.tableau[i].canTake(cardPile)) {

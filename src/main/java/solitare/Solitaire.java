@@ -4,6 +4,7 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class Solitaire extends Applet {
     public static final int AMOUNT_ALL_PILES = 13;
@@ -15,8 +16,7 @@ public class Solitaire extends Applet {
     static TablePile tableau[];
     static SuitPile suitPile[];
     static CardPile allPiles[];
-
-    private DraggedPile draggedPile = null;
+    static DraggedPile draggedPile;
 
     @Override
     public void init() {
@@ -42,12 +42,16 @@ public class Solitaire extends Applet {
         }
 
         addMouseListener(new SolitaireMouseListener());
+        addMouseMotionListener(new SolitaireMouseMotionListener());
     }
 
     @Override
     public void paint(Graphics g) {
         for (int i = 0; i < AMOUNT_ALL_PILES; i++) {
             allPiles[i].display(g);
+        }
+        if (draggedPile != null) {
+            draggedPile.display(g);
         }
     }
 
@@ -65,22 +69,35 @@ public class Solitaire extends Applet {
         public void mouseClicked(MouseEvent e) {
             // consider all piles, except deck
             if (e.getClickCount() == 2) {
+                System.out.println("ClickedTwice");
                 openCards(1, AMOUNT_ALL_PILES, e.getX(), e.getY());
             }
 
             // consider only deck pile
-            else if (e.getClickCount() == 1) {
+            else {
+                System.out.println("ClickedOnce");
                 openCards(0, 1, e.getX(), e.getY());
+
+                for (int i = 1; i < AMOUNT_ALL_PILES; i++) {
+                    if (allPiles[i].includes(e.getX(), e.getY())) {
+                        draggedPile = allPiles[i].getDraggedPile(e.getX(), e.getY());
+                        repaint();
+                        break;
+                    }
+                }
             }
         }
 
+    }
+
+    private class SolitaireMouseMotionListener extends MouseMotionAdapter {
         @Override
-        public void mousePressed(MouseEvent e) {
-            for (int i = 1; i < AMOUNT_ALL_PILES; i++) {
-                if (allPiles[i].includes(e.getX(), e.getY())) {
-                    draggedPile = allPiles[i].getDraggedPile(e.getX(), e.getY());
-                    break;
-                }
+        public void mouseDragged(MouseEvent e) {
+            if (draggedPile != null) {
+                draggedPile.updateCoords(e.getX(), e.getY());
+                System.out.println(draggedPile.height);
+                //repaint();
+                repaint(e.getX(), e.getY(), Card.WIDTH, draggedPile.height);
             }
         }
     }

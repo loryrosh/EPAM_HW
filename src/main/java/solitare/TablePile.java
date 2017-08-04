@@ -44,7 +44,7 @@ class TablePile extends CardPile {
 
         // else see if any getSuit pile can take card
         topCard = removeLast();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < Solitaire.AMOUNT_PILES_LEFT; i++) {
             CardPile cardPile = new CardPile(x, y);
             cardPile.add(topCard);
             if (Solitaire.suitPile[i].canTake(cardPile)) {
@@ -57,7 +57,7 @@ class TablePile extends CardPile {
             }
         }
         // else see if any other table pile can take card
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < Solitaire.AMOUNT_PILES_TABLE; i++) {
             CardPile cardPile = new CardPile(x, y);
             cardPile.add(topCard);
             if (Solitaire.tableau[i].canTake(cardPile)) {
