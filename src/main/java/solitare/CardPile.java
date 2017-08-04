@@ -15,12 +15,13 @@ class CardPile extends LinkedList<Card> {
 
     @Override
     public boolean add(Card card) {
+        boolean added = super.add(card);
         if (size() == 1) {
             height = Card.HEIGHT;
         } else {
-            height += Card.CARD_HEAD_HEIGHT;
+            height = Card.CARD_HEAD_HEIGHT * (size() - 1) + Card.HEIGHT;
         }
-        return super.add(card);
+        return added;
     }
 
     // the following are sometimes overridden
@@ -46,7 +47,7 @@ class CardPile extends LinkedList<Card> {
         }
     }
 
-    public DraggedPile getDraggedPile(int tx, int ty) {
+    public int getDragStartCardIdx(int tx, int ty) {
         int yCardsHeadersBottom = y + Card.CARD_HEAD_HEIGHT * (size() - 1);
 
         int cardNum;
@@ -55,20 +56,22 @@ class CardPile extends LinkedList<Card> {
         } else {
             cardNum = (ty - y) / Card.CARD_HEAD_HEIGHT;
         }
-        System.out.println(cardNum);
+        return cardNum;
+    }
 
-        if (cardNum != -1) {
-            DraggedPile draggedPile = new DraggedPile(x, (y + Card.CARD_HEAD_HEIGHT * cardNum));
+    public int getYCoordForDragging(int cardNum) {
+        return y + Card.CARD_HEAD_HEIGHT * cardNum;
+    }
+
+    public DraggedPile getDraggedPile(int tx, int ty) {
+        int cardNum = getDragStartCardIdx(tx, ty);
+        if (cardNum != -1 && get(cardNum).isFaceUp()) {
+            DraggedPile draggedPile = new DraggedPile(x, getYCoordForDragging(cardNum));
             while (cardNum < size()) {
                 draggedPile.add(remove(cardNum));
             }
-
-            if (size() > 0) {
-                getLast().flip();
-            }
             return draggedPile;
         }
-
         return null;
     }
 }
