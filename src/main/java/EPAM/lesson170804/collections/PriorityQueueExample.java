@@ -1,6 +1,7 @@
 package EPAM.lesson170804.collections;
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Random;
 
 public class PriorityQueueExample {
     private static final int MAX = 1000000;
@@ -28,22 +29,5 @@ public class PriorityQueueExample {
         }
 
         System.out.println(pq);
-
-        Map<String, Integer> wordCount = new HashMap<>();
-        fill(wordCount);
-
-        Map<String, Integer> wordCount1 = new LinkedHashMap<>();
-        Map<String, Integer> wordCount2 = new TreeMap<>();
-    }
-
-    private static void fill(Map<String, Integer> wordCount) {
-        List<String> words = Arrays.asList("one", "two", "two", "three");
-
-        for (String word : words) {
-            Integer count = wordCount.get(word);
-            wordCount.put(word, count == null ? Integer.valueOf(1) : ++count);
-        }
-
-        System.out.println(wordCount);
     }
 }
