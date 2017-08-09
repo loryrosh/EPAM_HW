@@ -5,6 +5,8 @@ public class HashCodeExample {
         String s = "policarbonatus";
 
         System.out.println(s.hashCode());
-        
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(Math.abs(Integer.MIN_VALUE));
+        System.out.println(Math.abs(Integer.MIN_VALUE % 10));
     }
 }
