@@ -1,6 +1,6 @@
-package EPAM.lesson170809;
+package EPAM.lesson170809.hw;
 
-import EPAM.lesson170809.Dictionary.Pair;
+import EPAM.lesson170809.hw.Dictionary.Pair;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,7 +28,7 @@ public class Dictionary implements Iterable<Pair> {
             data[index] = new ArrayList<>();
         }
 
-        Pair pair = getPair(key);
+        Pair pair = getPair(index, key);
         if (pair == null) {
             data[index].add(new Pair(key, value));
             return;
@@ -42,17 +42,12 @@ public class Dictionary implements Iterable<Pair> {
         return (pair == null) ? null : pair.value;
     }
 
-    private void resize() {
-        List<Pair>[] oldData = data;
-        data = new List[data.length * 2];
-
-        for (Pair pair : this) {
-            put(pair.key, pair.value);
-        }
-    }
-
     private Pair getPair(String key) {
         int index = hash(key);
+        return getPair(index, key);
+    }
+
+    private Pair getPair(int index, String key) {
         List<Pair> list = data[index];
         if (list == null) { // guard condition
             return null;
@@ -64,6 +59,15 @@ public class Dictionary implements Iterable<Pair> {
             }
         }
         return null;
+    }
+
+    private void resize() {
+        List<Pair>[] oldData = data;
+        data = new List[data.length * 2];
+
+        for (Pair pair : this) {
+            put(pair.key, pair.value);
+        }
     }
 
     private int hash(String key) {

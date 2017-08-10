@@ -1,6 +1,6 @@
-package EPAM.lesson170809;
+package EPAM.lesson170809.hw;
 
-import EPAM.lesson170809.Dictionary.Pair;
+import EPAM.lesson170809.hw.Dictionary.Pair;
 
 public class UseDictionary {
     public static void main(String[] args) {
