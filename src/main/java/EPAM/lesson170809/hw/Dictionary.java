@@ -42,6 +42,19 @@ public class Dictionary implements Iterable<Pair> {
         return (pair == null) ? null : pair.value;
     }
 
+    public Pair delete(String key) {
+        int index = hash(key);
+        if (data[index] != null) {
+            for (Pair pair : data[index]) {
+                if (pair.key.equals(key)) {
+                    data[index].remove(pair);
+                    return pair;
+                }
+            }
+        }
+        return null;
+    }
+
     private Pair getPair(String key) {
         int index = hash(key);
         return getPair(index, key);
@@ -86,15 +99,15 @@ public class Dictionary implements Iterable<Pair> {
                     return true;
 
                 listIterator = null; // предыдущий список уже перебрали до конца
-                for (currentElem++; listIterator == null && currentElem < data.length; currentElem++) {
-                    List<Pair> list = data[currentElem];
-
+                while (listIterator == null && currentElem < data.length) {
+                    List<Pair> list = data[currentElem++];
                     if (list == null) {
                         continue;
                     }
 
                     listIterator = list.iterator();
                     if (!listIterator.hasNext()) {
+                        listIterator = null;
                         continue;
                     }
                     return listIterator.hasNext();

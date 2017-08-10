@@ -13,11 +13,25 @@ public class UseDictionary {
         System.out.println(d.get("Ann"));
         System.out.println(d.get("Вася"));
 
+
         d.put("John", "St. Petersburg");
         System.out.println(d.get("John"));
+        System.out.println("________");
+
+        d.delete("John");
 
         for (Pair pair : d) {
             System.out.println(pair.key + " " + pair.value);
         }
+        System.out.println("________");
+
+        d.put("John", "Dublin");
+        System.out.println(d.get("John"));
+        System.out.println("________");
+
+        for (Pair pair : d) {
+            System.out.println(pair.key + " " + pair.value);
+        }
+        System.out.println("________");
     }
 }
