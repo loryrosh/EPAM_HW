@@ -74,13 +74,30 @@ public class Dictionary implements Iterable<Pair> {
         return null;
     }
 
-    private void resize() {
-        List<Pair>[] oldData = data;
-        data = new List[data.length * 2];
+    public void resize() {
+        Dictionary newDict = new Dictionary();
+        newDict.data = new List[data.length * 2];
 
-        for (Pair pair : this) {
-            put(pair.key, pair.value);
+        Iterator<Pair> iter = this.iterator();
+        while (iter.hasNext()) {
+            Pair pair = iter.next();
+            newDict.put(pair.key, pair.value);
         }
+        data = newDict.data;
+        newDict = null;
+    }
+
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+
+        Iterator<Pair> iter = this.iterator();
+        while (iter.hasNext()) {
+            Pair pair = iter.next();
+            res.append("Key: " + pair.key + " --- Value: " + pair.value + "\n");
+        }
+        res.append("size " + data.length + "\n");
+        res.append("________\n");
+        return res.toString();
     }
 
     private int hash(String key) {
