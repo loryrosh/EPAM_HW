@@ -23,17 +23,12 @@ public class UseDictionary {
         System.out.println(d.get("John"));
         System.out.println("________");
 
-        System.out.println(d.toString());
-        d.resize();
-        System.out.println(d.toString());
-
         Dictionary d1 = Dictionary.createInstance(1000);
-        System.out.println(d1.get("Key 300"));
+        System.out.println("");
 
         Dictionary d2 = Dictionary.createInstance(10000);
-        System.out.println(d1.get("Key 3000"));
+        System.out.println("");
 
         Dictionary d3 = Dictionary.createInstance(100000);
-        System.out.println(d1.get("Key 30000"));
     }
 }

@@ -9,10 +9,12 @@ import java.util.List;
 
 public class Dictionary implements Iterable<Pair> {
     private static final int MAX = 10;
-    private static final BigDecimal THRESHOLD = new BigDecimal(100000);
+    private static final int MAX_PAIRS = 1000;
+    private static final BigDecimal TIME_LIMIT = new BigDecimal(20000);
+    private static final double INCREASE_FACTOR = 1.5;
 
     List<Pair>[] data = new List[MAX];
-    private int elemsCount = 0;
+    private boolean resizeInProgress = false;
 
     public static class Pair {
         String key;
@@ -44,7 +46,12 @@ public class Dictionary implements Iterable<Pair> {
 
         Pair pair = getPair(index, key);
         if (pair == null) {
+            BigDecimal start = new BigDecimal(System.nanoTime());
             data[index].add(new Pair(key, value));
+
+            if (!resizeInProgress) {
+                benchmark(index, new BigDecimal(System.nanoTime()).subtract(start));
+            }
             return;
         }
 
@@ -52,20 +59,8 @@ public class Dictionary implements Iterable<Pair> {
     }
 
     public String get(String key) {
-        BigDecimal start = new BigDecimal(System.nanoTime());
         Pair pair = getPair(key);
-        BigDecimal end = new BigDecimal(System.nanoTime()).subtract(start);
-
-        benchmark(end);
         return (pair == null) ? null : pair.value;
-    }
-
-    private void benchmark(BigDecimal end) {
-        if (end.compareTo(THRESHOLD) > 0) {
-            System.out.println("Resize occurred. Previous size: " + data.length);
-            resize();
-            System.out.println("Current size: " + data.length);
-        }
     }
 
     public Pair delete(String key) {
@@ -79,51 +74,6 @@ public class Dictionary implements Iterable<Pair> {
             }
         }
         return null;
-    }
-
-    private Pair getPair(String key) {
-        int index = hash(key);
-        return getPair(index, key);
-    }
-
-    private Pair getPair(int index, String key) {
-        List<Pair> list = data[index];
-        if (list == null) { // guard condition
-            return null;
-        }
-
-        for (Pair pair : list) {
-            if (pair.key.equals(key)) {
-                return pair;
-            }
-        }
-        return null;
-    }
-
-    public void resize() {
-        Dictionary newDict = new Dictionary();
-        newDict.data = new List[(int) (data.length * 1.5)];
-
-        for (Pair pair : this) {
-            newDict.put(pair.key, pair.value);
-        }
-
-        data = newDict.data;
-    }
-
-    public String toString() {
-        StringBuilder res = new StringBuilder();
-
-        for (Pair pair : this) {
-            res.append("Key: ").append(pair.key).append(" --- Value: ").append(pair.value).append("\n");
-        }
-        res.append("size ").append(data.length).append("\n");
-        res.append("________\n");
-        return res.toString();
-    }
-
-    private int hash(String key) {
-        return key.hashCode() & 0x7FFFFFFF % data.length;
     }
 
     @Override
@@ -162,5 +112,61 @@ public class Dictionary implements Iterable<Pair> {
                 return listIterator.next();
             }
         };
+    }
+
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+
+        for (Pair pair : this) {
+            res.append("Key: ").append(pair.key).append(" --- Value: ").append(pair.value).append("\n");
+        }
+        res.append("size ").append(data.length).append("\n");
+        res.append("________\n");
+        return res.toString();
+    }
+
+    private Pair getPair(String key) {
+        int index = hash(key);
+        return getPair(index, key);
+    }
+
+    private Pair getPair(int index, String key) {
+        List<Pair> list = data[index];
+        if (list == null) { // guard condition
+            return null;
+        }
+
+        for (Pair pair : list) {
+            if (pair.key.equals(key)) {
+                return pair;
+            }
+        }
+        return null;
+    }
+
+    private void resize() {
+        Dictionary newDict = new Dictionary();
+        newDict.data = new List[(int) (data.length * INCREASE_FACTOR)];
+
+        resizeInProgress = true;
+        for (Pair pair : this) {
+            newDict.put(pair.key, pair.value);
+        }
+        resizeInProgress = false;
+
+        data = newDict.data;
+        newDict = null;
+    }
+
+    private void benchmark(int index, BigDecimal end) {
+        if (data[index].size() > MAX_PAIRS && end.compareTo(TIME_LIMIT) > 0) {
+            System.out.println("Resize occurred. Previous size: " + data.length);
+            resize();
+            System.out.println("Current size: " + data.length);
+        }
+    }
+
+    private int hash(String key) {
+        return key.hashCode() & 0x7FFFFFFF % data.length;
     }
 }
