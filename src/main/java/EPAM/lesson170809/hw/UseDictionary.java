@@ -30,5 +30,11 @@ public class UseDictionary {
         System.out.println("");
 
         Dictionary d3 = Dictionary.createInstance(100000);
+
+        Dictionary<String, Integer> d4 = new Dictionary<>();
+        d4.put("Dad", 10);
+        d4.put("Mum", 20);
+        d4.put("Son", 10);
+        System.out.println(d4.toString());
     }
 }
