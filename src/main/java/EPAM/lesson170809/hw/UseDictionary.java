@@ -3,6 +3,7 @@ package EPAM.lesson170809.hw;
 public class UseDictionary {
     public static void main(String[] args) {
         Dictionary d = new Dictionary();
+
         d.put("Pete", "New York");
         d.put("John", "Boston");
         d.put("Вася", "Москва");
@@ -10,7 +11,6 @@ public class UseDictionary {
         System.out.println(d.get("John"));
         System.out.println(d.get("Ann"));
         System.out.println(d.get("Вася"));
-
 
         d.put("John", "St. Petersburg");
         System.out.println(d.get("John"));
@@ -26,5 +26,14 @@ public class UseDictionary {
         System.out.println(d.toString());
         d.resize();
         System.out.println(d.toString());
+
+        Dictionary d1 = Dictionary.createInstance(1000);
+        System.out.println(d1.get("Key 300"));
+
+        Dictionary d2 = Dictionary.createInstance(10000);
+        System.out.println(d1.get("Key 3000"));
+
+        Dictionary d3 = Dictionary.createInstance(100000);
+        System.out.println(d1.get("Key 30000"));
     }
 }

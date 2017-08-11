@@ -2,12 +2,14 @@ package EPAM.lesson170809.hw;
 
 import EPAM.lesson170809.hw.Dictionary.Pair;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Dictionary implements Iterable<Pair> {
     private static final int MAX = 10;
+    private static final BigDecimal THRESHOLD = new BigDecimal(100000);
 
     List<Pair>[] data = new List[MAX];
     private int elemsCount = 0;
@@ -20,6 +22,18 @@ public class Dictionary implements Iterable<Pair> {
             this.key = key;
             this.value = value;
         }
+    }
+
+    public static Dictionary createInstance(int valuesNum) {
+        BigDecimal start = new BigDecimal(System.currentTimeMillis());
+
+        Dictionary dict = new Dictionary();
+        for (int i = 0; i < valuesNum; i++) {
+            dict.put(("Key " + i), ("Value " + i));
+        }
+        System.out.println("Resulting time for populating the Dictionary: " + new BigDecimal(System.currentTimeMillis())
+                .subtract(start));
+        return dict;
     }
 
     public void put(String key, String value) {
@@ -38,8 +52,20 @@ public class Dictionary implements Iterable<Pair> {
     }
 
     public String get(String key) {
+        BigDecimal start = new BigDecimal(System.nanoTime());
         Pair pair = getPair(key);
+        BigDecimal end = new BigDecimal(System.nanoTime()).subtract(start);
+
+        benchmark(end);
         return (pair == null) ? null : pair.value;
+    }
+
+    private void benchmark(BigDecimal end) {
+        if (end.compareTo(THRESHOLD) > 0) {
+            System.out.println("Resize occurred. Previous size: " + data.length);
+            resize();
+            System.out.println("Current size: " + data.length);
+        }
     }
 
     public Pair delete(String key) {
@@ -76,26 +102,22 @@ public class Dictionary implements Iterable<Pair> {
 
     public void resize() {
         Dictionary newDict = new Dictionary();
-        newDict.data = new List[data.length * 2];
+        newDict.data = new List[(int) (data.length * 1.5)];
 
-        Iterator<Pair> iter = this.iterator();
-        while (iter.hasNext()) {
-            Pair pair = iter.next();
+        for (Pair pair : this) {
             newDict.put(pair.key, pair.value);
         }
+
         data = newDict.data;
-        newDict = null;
     }
 
     public String toString() {
         StringBuilder res = new StringBuilder();
 
-        Iterator<Pair> iter = this.iterator();
-        while (iter.hasNext()) {
-            Pair pair = iter.next();
-            res.append("Key: " + pair.key + " --- Value: " + pair.value + "\n");
+        for (Pair pair : this) {
+            res.append("Key: ").append(pair.key).append(" --- Value: ").append(pair.value).append("\n");
         }
-        res.append("size " + data.length + "\n");
+        res.append("size ").append(data.length).append("\n");
         res.append("________\n");
         return res.toString();
     }
