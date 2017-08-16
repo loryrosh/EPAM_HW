@@ -7,9 +7,11 @@ public class MergeEx {
         Integer[] a = new Integer[]{1, 2, 3, 4, 3, 4, 2, 3, 6};
         Integer[] aux = new Integer[a.length];
 
+        // отсортированное слияние массива
         merge(a, aux, 0, a.length - 1, 4);
         System.out.println(Arrays.toString(a));
 
+        // merge с помощью рекурсии
         Integer[] a2 = {70, 60, 50, 40, 30, 20, 10, 0};
         sort(a2);
         System.out.println(Arrays.toString(a2));
