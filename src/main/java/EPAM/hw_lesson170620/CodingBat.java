@@ -34,8 +34,11 @@ public class CodingBat {
         //System.out.println(Arrays.toString(seriesUp(3)));
         //System.out.println(maxMirror(new int[]{1, 2, 1, 20, 21, 1, 2, 1, 2, 23, 24, 2, 1, 2, 1, 25}));
         //System.out.println(maxMirror(new int[]{5, 9, 1, 6, 5, 4, 1, 9, 5}));
-        System.out.println(dividesSelf(120));
-
+        //System.out.println(dividesSelf(120));
+        //System.out.println(changeXY("xhixhix"));
+        //System.out.println(countPairs("ihihhh"));
+        //System.out.println(parenBit("xyz(abc)123"));
+        System.out.println(nestParen("((())"));
     }
 
     public static boolean array123(int[] nums) {
@@ -433,5 +436,57 @@ public class CodingBat {
         if (cur != 1 && n % cur != 0)
             return false;
         return true;
+    }
+
+    public static String changeXY(String str) {
+        if (str.length() == 0)
+            return "";
+
+        String lastLetter = str.substring(str.length() - 1, str.length());
+        if (lastLetter.equals("x"))
+            lastLetter = "y";
+
+        return changeXY(str.substring(0, str.length() - 1)) + lastLetter;
+    }
+
+    public static int countPairs(String str) {
+        if (str.length() == 0)
+            return 0;
+
+        if (str.length() < 3)
+            return 0;
+
+        if (str.charAt(0) == str.charAt(2))
+            return 1 + countPairs(str.substring(1, str.length()));
+        else
+            return countPairs(str.substring(1, str.length()));
+    }
+
+    public static String parenBit(String str) {
+        if (str.length() == 0)
+            return "";
+
+        String firstLetter = str.substring(0, 1);
+        if (firstLetter.equals("(")) {
+            if (str.substring(str.length() - 1, str.length()).equals(")")) {
+                return str;
+            } else
+                return parenBit(str.substring(0, str.length() - 1));
+        } else {
+            return parenBit(str.substring(1, str.length()));
+        }
+    }
+
+    public static boolean nestParen(String str) {
+        if (str.length() == 0)
+            return true;
+
+        if (str.length() == 1)
+            return false;
+
+        if (str.charAt(0) == '(' && str.charAt(str.length() - 1) == ')')
+            return nestParen(str.substring(1, str.length() - 1));
+        else
+            return false;
     }
 }
