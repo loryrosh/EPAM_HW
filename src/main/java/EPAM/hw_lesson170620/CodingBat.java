@@ -38,7 +38,11 @@ public class CodingBat {
         //System.out.println(changeXY("xhixhix"));
         //System.out.println(countPairs("ihihhh"));
         //System.out.println(parenBit("xyz(abc)123"));
-        System.out.println(nestParen("((())"));
+        //System.out.println(nestParen("((())"));
+        //System.out.println(groupSum(0, new int[]{2, 4, 8}, 2));
+        //System.out.println(groupSum5(0, new int[]{3, 5, 1}, 4));
+        //System.out.println(groupSumClump(0, new int[]{2, 4, 8}, 10));
+        System.out.println(splitArray(new int[]{1, 1, 1, 1, 1}));
     }
 
     public static boolean array123(int[] nums) {
@@ -488,5 +492,70 @@ public class CodingBat {
             return nestParen(str.substring(1, str.length() - 1));
         else
             return false;
+    }
+
+    public static boolean groupSum(int start, int[] nums, int target) {
+        if (start >= nums.length) {
+            return target == 0;
+        }
+
+        return groupSum(start + 1, nums, target - nums[start]) ||
+                groupSum(start + 1, nums, target);
+    }
+
+    public static boolean groupSum5(int start, int[] nums, int target) {
+        if (start >= nums.length) {
+            return target == 0;
+        }
+
+        if ((start > 0 && nums[start - 1] % 5 == 0 && nums[start] != 1)
+                && groupSum5(start + 1, nums, target - nums[start])) {
+            return true;
+        }
+
+        if ((nums[start] % 5 != 0 || (start < nums.length - 1 && nums[start + 1] == 1))
+                && groupSum5(start + 1, nums, target)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean groupSumClump(int start, int[] nums, int target) {
+        if (start >= nums.length) {
+            return target == 0;
+        }
+
+        if (start < nums.length - 1 && nums[start] == nums[start + 1]) {
+            int i = start + 1;
+            int targetNew = target - nums[start];
+            while (i < nums.length - 1 && nums[start] == nums[i]) {
+                targetNew -= nums[i++];
+            }
+            return groupSumClump(i, nums, targetNew) ||
+                    groupSumClump(i, nums, target);
+        } else {
+            return groupSumClump(start + 1, nums, target - nums[start]) ||
+                    groupSumClump(start + 1, nums, target);
+        }
+    }
+
+    public static boolean splitArray(int[] nums) {
+        if (nums.length == 0)
+            return true;
+
+        if (nums.length == 1)
+            return false;
+
+        return isEqual(0, nums, 0, 0);
+    }
+
+    private static boolean isEqual(int start, int[] nums, int sum1, int sum2) {
+        if (start >= nums.length) {
+            return sum1 == sum2;
+        }
+
+        return isEqual(start + 1, nums, sum1 + nums[start], sum2) ||
+                isEqual(start + 1, nums, sum1, sum2 + nums[start]);
     }
 }
