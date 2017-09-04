@@ -14,47 +14,32 @@ public class SpiralText {
         }
 
         int iStart = 0;
-        int jStart = 0;
         int iEnd = arr.length;
+        int jStart = 0;
         int jEnd = arr[0].length;
-        int iParam = 1;
-        int jParam = 1;
 
         int curNum = 1;
 
-        int i = 0;
-        int j = 0;
         while (curNum <= (arr.length * arr[0].length)) {
-            for (; j < jEnd && j >= 0; j = j + jParam) {
-                if (arr[i][j] == 0) {
-                    arr[i][j] = curNum++;
-                } else {
-                    jEnd = j;
-                    break;
-                }
+            for (int j = jStart; j < jEnd; j++) {
+                arr[iStart][j] = curNum++;
             }
-            jParam = -jParam;
+            iStart++;
+            jEnd--;
 
-            if (j > 0) {
-                j--;
-                i++;
-            } else {
-                j++;
-                i--;
+            for (int i = iStart; i < iEnd; i++) {
+                arr[i][jEnd] = curNum++;
+            }
+            iEnd--;
+
+            for (int j = jEnd - 1; j >= jStart; j--) {
+                arr[iEnd][j] = curNum++;
             }
 
-            for (; i < iEnd && i >= 0; i = i + iParam) {
-                if (arr[i][j] == 0) {
-                    arr[i][j] = curNum++;
-                } else {
-                    iEnd = i;
-                    break;
-                }
+            for (int i = iEnd - 1; i >= iStart; i--) {
+                arr[i][jStart] = curNum++;
             }
-            j--;
-            i--;
-
-            iParam = -iParam;
+            jStart++;
         }
         return arr;
     }
